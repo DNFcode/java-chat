@@ -10,6 +10,11 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+
+/**
+ * Do not touch!
+ * Используется для того чтобы можно было хранить статические файлы в папке static.
+ * */
 public class DefaultFilter implements Filter {
 
     private RequestDispatcher defaultRequestDispatcher;
