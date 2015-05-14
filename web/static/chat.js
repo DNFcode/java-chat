@@ -2,8 +2,10 @@
  * Created by dnf on 12.05.15.
  */
 $(document).ready(function() {
-    console.log('hi');
-    $('#a').click(function () {
-        alert('working!')
-    });
+    $('#a').click(function(){
+        $.ajax({
+            url: '/hello?username=1234',
+            type: 'GET',
+        })
+    })
 })

@@ -3,9 +3,22 @@ package javachat;
 /**
  * Created by dnf on 12.05.15.
  */
-import java.util.Date;
+import java.sql.Date;
 
+/**
+ * В этом классе применяется singleton, так как база у нас всего одна,
+ * то и объектов не может быть много.
+ */
 public class DataBase {
+    static public DataBase getInstance(){
+        return new DataBase();
+    }
+    /**
+     * private конструктор для невозможного создания новых объектов БД.
+     */
+    private DataBase(){
+
+    }
     /**
      * username - имя пользователя
      * MD5password - пароль закодированный в виде хеш-суммы MD5
@@ -42,9 +55,9 @@ public class DataBase {
      * Возвращает список всех сообщений, которые были сохранены не позднее укзанной даты.
      * При ошибке возвращает null.
      */
-    public String[] getMessages(Date filterDate){
+    public Message[] getMessages(Date filterDate){
         //IMAGINATION. Просто представь что оно работает.
-        return new String[1];
+        return new Message[1];
     }
     /**
      * Возвращает список всех пользователей.

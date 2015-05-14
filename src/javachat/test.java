@@ -13,17 +13,18 @@ import javax.servlet.http.HttpServletResponse;
  * */
 public class test extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=utf-8");
 
-        BufferedReader bf = req.getReader();
+        /*BufferedReader bf = req.getReader();
         String[] array = new String[100];
         String line;
         int i = 0;
         while((line = bf.readLine()) != null){
             array[i] = line;
             i++;
-        }
+        }*/
+        String line = req.getParameter("username");
         System.out.println("<H1>Hello, world! или Привет мир</H1>");
 
     }
