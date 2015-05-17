@@ -6,6 +6,9 @@ $(document).ready(function() {
         $.ajax({
             url: '/hello?username=1234',
             type: 'GET',
+            success: function(){
+                alert('bitcj')
+            }
         })
     })
 })

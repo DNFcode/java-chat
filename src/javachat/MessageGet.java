@@ -1,6 +1,9 @@
 package javachat;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 
 import javax.servlet.ServletException;
@@ -8,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class MessageGet extends HttpServlet{
+public class MessageGet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -17,14 +20,16 @@ public class MessageGet extends HttpServlet{
             DataBase db = DataBase.getInstance();
             Message[] messages = db.getMessages(date);
             if (messages != null) {
-                //TODO: send all messages
-            }else {
-                //TODO: error response
+                Gson gson = new Gson();
+                resp.setContentType("json;charset=utf-8");
+                PrintWriter pw = resp.getWriter();
+                String result = gson.toJson(messages);
+                pw.print(result);
+            } else {
+                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
-        }catch (IllegalArgumentException ex){
-            //TODO: wrong request error
+        } catch (IllegalArgumentException ex) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
-
-
     }
 }
