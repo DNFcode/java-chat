@@ -41,7 +41,6 @@ public class test extends HttpServlet {
         String a = gson.toJson(array);
         resp.setStatus(HttpServletResponse.SC_OK);
         System.out.println("<H1>Hello, world! или Привет мир</H1>");
-
     }
 }
 
