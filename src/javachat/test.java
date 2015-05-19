@@ -40,6 +40,8 @@ public class test extends HttpServlet {
         uuser[] array = {new uuser("lol", true), new uuser("WTF", false)};
         String a = gson.toJson(array);
         resp.setStatus(HttpServletResponse.SC_OK);
+        PrintWriter pw = resp.getWriter();
+        pw.print(a);
         System.out.println("<H1>Hello, world! или Привет мир</H1>");
 
     }

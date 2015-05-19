@@ -7,10 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Регистрация и авторизация пользователей в системе.
+ */
 public class LoginUser extends HttpServlet {
+
+    static private final Long delay = (long) 5*60*1000;
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Get data from POST method.
@@ -26,14 +33,28 @@ public class LoginUser extends HttpServlet {
             String dbMD5password = db.getUserMD5Password(username);
             if (dbMD5password != null) {
                 if (dbMD5password.equals(passwordMD5)) {
-                    //TODO: login
+                    //Авторизация пользователя
+                    CachedData cd = CachedData.getInstance();
+                    cd.getUser(username).setRegistered();
+                    req.login(username, password);
+                    resp.sendRedirect("/index.jsp");
                 } else {
-                    //TODO: wrong password response
+                    resp.sendError(HttpServletResponse.SC_FORBIDDEN);
                 }
             } else {
                 if (db.saveUser(username, passwordMD5)) {
-                    //TODO: Account created successfully.
-                    //TODO: Please login, or your account will be deleted after 5 minutes.
+                    //Добаление пользователя в кеш
+                    CachedData cd = CachedData.getInstance();
+                    cd.addUser(new User(username, null, false));
+                    //Регистрация пользователя (если через 5 минут он не войдет в систему, то акк будет удален)
+                    resp.setStatus(HttpServletResponse.SC_OK);
+                    resp.setContentType("text/html;charset=utf-8");
+                    PrintWriter pr = resp.getWriter();
+                    pr.print("Need to log in to activate account."); //TODO: или чего другое отослать. Я не знаю :(
+
+                    //Начало отсчета до удаления
+                    AuthenticationCountdown ac = new AuthenticationCountdown(delay, username);
+                    ac.run();
                 } else {
                     resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 }

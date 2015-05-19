@@ -3,7 +3,7 @@ package javachat;
 import java.sql.Date;
 
 /**
- * Created by dnf on 14.05.15.
+ * Класс для более удобной передачи сообщений.
  */
 public class Message {
     private final String username;
