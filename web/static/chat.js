@@ -6,8 +6,15 @@ $(document).ready(function() {
         $.ajax({
             url: '/hello?username=1234',
             type: 'GET',
-            success: function(){
-                alert('bitcj')
+            dataType: 'json',
+            success: function(data, textStatus, xhr) {
+                console.log(xhr.status);
+            },
+            complete: function(xhr, textStatus) {
+                console.log(xhr.status);
+            },
+            error: function(xhr,textStatus, errorThrown ){
+                console.log(xhr.status);
             }
         })
     })

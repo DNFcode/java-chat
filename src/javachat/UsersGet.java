@@ -12,10 +12,19 @@ import com.google.gson.*;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+/**
+ * По запросу клиента отпарвляет список пользователей в зависимости от выбранного запроса.
+ * Запрос может быть на онлайн пользователей или на всех пользователей.
+ */
+
 public class UsersGet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String mode = req.getParameter("mode");
+
+        //Если пользователь авторизирован, то обновить последнее время активности.
+        CachedData.getInstance().updateUserActivity(req);
+
         if (mode.equals("online") || mode.equals("offline")) {
 
             CachedData cd = CachedData.getInstance();

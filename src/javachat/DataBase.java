@@ -11,15 +11,20 @@ import java.sql.Date;
  * то и объектов не может быть много.
  */
 public class DataBase {
+
+    static private DataBase instance = null;
+
     static public DataBase getInstance() {
-        return new DataBase();
+        if(instance == null)
+            instance = new DataBase();
+        return instance;
     }
 
     /**
      * private конструктор для невозможного создания новых объектов БД.
      */
     private DataBase() {
-
+        //TODO: инициализация соединения с бд
     }
 
     /**
@@ -73,5 +78,12 @@ public class DataBase {
     public String[] getAllUsers() {
         //IMAGINATION. Просто представь что оно работает.
         return new String[1];
+    }
+
+    /**
+     * Удаляет информацию о пользователе из БД по его имени.
+     */
+    public void removeUser(String username){
+
     }
 }
