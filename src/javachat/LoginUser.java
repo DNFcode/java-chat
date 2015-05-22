@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 
 /**
  * Регистрация и авторизация пользователей в системе.
@@ -61,6 +62,8 @@ public class LoginUser extends HttpServlet {
             }
         } catch (NoSuchAlgorithmException ex) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
     }

@@ -1,5 +1,7 @@
 package javachat;
 
+import java.sql.SQLException;
+
 /**
  * This class will delete user from data base and cache if
  * user will not login after registration.
@@ -26,6 +28,8 @@ public class AuthenticationCountdown implements Runnable {
                 db.removeUser(username);
             }
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

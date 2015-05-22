@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,9 +25,11 @@ public class MessageGet extends HttpServlet {
 
         try {
             Date date = Date.valueOf(req.getParameter("date"));
+            long date_ = date.getTime();
             //TODO: don't forget to make valid AJAX request date format yyyy-[m]m-[d]d
             DataBase db = DataBase.getInstance();
-            Message[] messages = db.getMessages(date);
+            //Message[] messages = db.getMessages(date);
+            String[] messages = db.getMessages(date_);
 
             if (messages != null) {
                 Gson gson = new Gson();
@@ -38,6 +42,8 @@ public class MessageGet extends HttpServlet {
             }
         } catch (IllegalArgumentException ex) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
