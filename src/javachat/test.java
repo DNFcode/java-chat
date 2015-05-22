@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.Calendar;
 
 import javax.servlet.ServletException;
@@ -43,6 +43,56 @@ public class test extends HttpServlet {
         PrintWriter pw = resp.getWriter();
         pw.print(a);
         System.out.println("<H1>Hello, world! или Привет мир</H1>");
+
+        String username = "Kate";
+        String password = null;
+        java.util.Date Current_Date = new java.util.Date();
+        Long filterDate = Current_Date.getTime();
+        //Проверка
+        DataBase db = DataBase.getInstance();
+        try {
+            db.saveUser("1234", "12f33");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            System.out.println("Password: " + db.getUserMD5Password(username));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Users: ");
+        String user[] = db.getAllUsers();
+        for(int i=0; i<user.length; i++){
+            System.out.println(user[i]);
+        }
+        String messages[] = new String[0];
+        try {
+            messages = db.getMessages(filterDate);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for(int i=0; i<messages.length; i++){
+            System.out.println(messages[i]);
+        }
+        try {
+            db.removeUser("Kate");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Users: ");
+        user = db.getAllUsers();
+        for(int i=0; i<user.length; i++){
+            System.out.println(user[i]);
+        }
+        try {
+            messages = db.getMessages(filterDate);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for(int i=0; i<messages.length; i++){
+            System.out.println(messages[i]);
+        }
+        db.disconnect();
     }
 }
 
