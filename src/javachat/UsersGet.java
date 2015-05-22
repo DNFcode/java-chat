@@ -20,37 +20,25 @@ import java.util.ArrayList;
 public class UsersGet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String mode = req.getParameter("mode");
 
         //Если пользователь авторизирован, то обновить последнее время активности.
         CachedData.getInstance().updateUserActivity(req);
 
-        if (mode.equals("online") || mode.equals("offline")) {
+        CachedData cd = CachedData.getInstance();
+        cd.updateUsersStatus();
+        User[] users = cd.getUsers();
 
-            CachedData cd = CachedData.getInstance();
-            cd.updateUsersStatus();
-            User[] users = cd.getUsers();
+        Gson gson = new Gson();
+        resp.setContentType("json;charset=utf-8");
+        PrintWriter pw = resp.getWriter();
 
-            Gson gson = new Gson();
-            resp.setContentType("json;charset=utf-8");
-            PrintWriter pw = resp.getWriter();
+        ArrayList<JSONUser> resultUsers = new ArrayList<JSONUser>();
 
-            ArrayList<JSONUser> resultUsers = new ArrayList<JSONUser>();
+        for (User user : users)
+            resultUsers.add(new JSONUser(user.getUsername(), user.isOnline()));
 
-            if (mode.equals("online")) {
-                for (User user : users)
-                    if (user.isOnline())
-                        resultUsers.add(new JSONUser(user.getUsername(), true));
-            } else {
-                for (User user : users)
-                    resultUsers.add(new JSONUser(user.getUsername(), user.isOnline()));
-            }
-
-            String result = gson.toJson(resultUsers);
-            pw.print(result);
-        } else {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        }
+        String result = gson.toJson(resultUsers);
+        pw.print(result);
     }
 }
 

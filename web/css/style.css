@@ -2,18 +2,18 @@
     margin: 30px;
 }
 
-.but2 {
+#login-btn {
+    float: right;
     width: 125px;
+    color: #78909C;
 }
 
-.form-control2 {
+#users-container {
     display: block;
     width: 100%;
-    height: 100px;
-    padding: 6px 12px;
-    font-size: 14px;
+    height: 60%;
     line-height: 1.42857143;
-    color: #555;
+    color: #78909C;
     background-color: #ECEFF1;
     background-image: none;
     border: 1px solid #ccc;
@@ -25,11 +25,101 @@
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
+.online-switch-on{
+    background-color: #f2fff3;
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075);
+    border-radius: 3px 0 0 0;
+}
+
+.online-switch-off{
+    background-color: #f2fff3;
+    box-shadow:0 2px 2px rgba(0, 0, 0, .075);
+    border-radius: 3px 0 0 0;
+}
+
+.switch{
+    cursor: pointer;
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+
+.all-switch-off{
+    background-color: #e5f4ff;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, .075);
+    border-radius: 0 3px 0 0;
+}
+
+.all-switch-on{
+    background-color: #e5f4ff;
+    box-shadow: inset 0px 2px 2px rgba(0, 0, 0, .075);
+    border-radius: 0 3px 0 0;
+}
+
+.users-list-online{
+    background-color: #f2fff3;
+    border-radius: 0 0 3px 3px;
+    height: 100%;
+    padding: 20px 10px 20px 10px;
+    overflow-y: scroll;
+    width: 99.9%;
+}
+
+.users-list-all{
+    background-color: #e5f4ff;
+    border-radius: 0 0 3px 3px;
+    height: 100%;
+    padding: 20px 10px 20px 10px;
+    overflow-y: scroll;
+    width: 99.9%;
+}
+
+#messages{
+    display: block;
+    width: 100%;
+    height: 60%;
+    line-height: 1.42857143;
+    color: #78909C;
+    background-color: #ECEFF1;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    margin-bottom: 10px;
+    margin-top: 39px;
+    overflow-y: scroll;
+    word-break: break-word;
+}
+
+.user{
+    margin-bottom: 5px;
+}
+
 .auth {
     border-style: none;
     background-color: #4DB6AC;
 }
 
+.message-text{
+
+}
+
+.center-text{
+    color: #78909C;
+    text-align: center;
+}
+
+.message{
+    margin: 6px;
+}
+
+.user-message{
+    color: #006064;
+}
 
 .button {
     width: 173px;
@@ -72,4 +162,22 @@
 
 h3 {
     margin: 20px 0px 10px 20px;
+}
+
+#message-input{
+    float: left;
+    width: 90%;
+}
+
+#send-button{
+    float: left;
+    width: 10%;
+}
+
+.online{
+    color: #4CAF50;
+}
+
+.offline{
+    color: #9E9E9E;
 }

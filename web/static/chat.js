@@ -1,6 +1,54 @@
 /**
  * Created by dnf on 12.05.15.
  */
+
+var users = [];
+
+function updateUsers(){
+    $.ajax({
+        url: '/users',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data, textStatus, xhr) {
+            users = data.sort(function(a,b){return a.name.localeCompare(b.name)});
+        }
+    });
+    $('#users-list').html('');
+    if($('#online-switch').hasClass('online-switch-on')){
+        users.forEach(function(user){
+            if(user.isOnline){
+                $('#users-list').html($('#users-list').html()+
+                '<div class="user">'+
+                    '<span class="'+(user.isOnline?'online':'offline')+'">&#9679;</span>'+
+                    '<span>'+user.name+'</span>'+
+                '</div>');
+            }
+        })
+    }else{
+        users.forEach(function(user){
+            $('#users-list').html($('#users-list').html()+
+            '<div class="user">'+
+                '<span class="'+(user.isOnline?'online':'offline')+'">&#9679;</span>'+
+                '<span>'+user.name+'</span>'+
+            '</div>');
+        })
+    }
+}
+
+function updateMessages(date){
+    var messages = [];
+    $.ajax({
+        url: '/message/get?date='+date,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data, textStatus, xhr) {
+            messages = data;
+        }
+    });
+
+
+}
+
 $(document).ready(function() {
     $('#a').click(function(){
         $.ajax({
@@ -18,10 +66,40 @@ $(document).ready(function() {
             }
         })
     })
-})
 
-$('document').ready(function(){
-    $('#modal').modal();
+    //------------------Список юзеров----------------------
+    $('#online-switch').click(function(){
+        if($(this).hasClass('online-switch-off')){
+            $(this).removeClass('online-switch-off');
+            $(this).addClass('online-switch-on');
+            if($('#all-switch').hasClass('all-switch-on')){
+                $('#all-switch').removeClass('all-switch-on');
+                $('#all-switch').addClass('all-switch-off');
+            }
+            if($('#users-list').hasClass('users-list-all')){
+                $('#users-list').removeClass('users-list-all');
+                $('#users-list').addClass('users-list-online');
+            }
+            updateUsers();
+        }
+    });
+
+    $('#all-switch').click(function(){
+        if($(this).hasClass('all-switch-off')){
+            $(this).removeClass('all-switch-off');
+            $(this).addClass('all-switch-on');
+            if($('#online-switch').hasClass('online-switch-on')){
+                $('#online-switch').removeClass('online-switch-on');
+                $('#online-switch').addClass('online-switch-off');
+            }
+            if($('#users-list').hasClass('users-list-online')){
+                $('#users-list').removeClass('users-list-online');
+                $('#users-list').addClass('users-list-all');
+            }
+            updateUsers();
+        }
+    })
+    //-----------------------------------------------------
+
+    $()
 });
-
-$('#navbar').scrollspy()

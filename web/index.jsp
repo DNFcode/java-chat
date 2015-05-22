@@ -30,67 +30,92 @@
 
     <div class="container">
         <div class="row">
-            <center>
             <div class="col-sm-12">
                 <!-- Bual -->
-                <button type="button" class="btn btn-default but2" data-toggle="modal" data-target=".bs-example-modal-sm">
-                    <span class="but">Log in</span>
-                </button>
-                <button type="button" class="btn btn-default but2">
-                    <span class="but">Log out</span>
+                <button type="button" id="login-btn" class="btn btn-default but2" data-toggle="modal" data-target=".bs-example-modal-sm">
+                    <span>Log in</span>
                 </button>
                 <h1></h1>
             </div>
 
             <div class="col-sm-3">
-                <font color=#78909C><h4>Пользователи</h4></font>
-                <label class="checkbox-inline">
-                    <input type="checkbox" id="inlineCheckbox1" value="option1"> <font color=#78909C>онлайн</font>
-                </label>
-                <label class="checkbox-inline">
-                    <input type="checkbox" id="inlineCheckbox2" value="option1"> <font color=#78909C>все</font>
-                </label>
-                <br>
-                <select multiple class="form-control2">
-
-                </select>
-            </div>
-            </center>
-            <div class="col-sm-9">
-                <h5 class="info">
-                    <div multiple class="form-control2">
-
+                <div class="center-text"><h4>Пользователи</h4></div>
+                <div id="users-container">
+                    <div id="online-switch" class="switch online-switch-on">Online</div>
+                    <div id="all-switch" class="switch all-switch-off">All</div>
+                    <div id="users-list" class="users-list-online">
+                        <div class="user">
+                            <span class="offline">&#9679;</span>
+                            <span>NikitaMudlo</span>
+                        </div>
+                        <div class="user">
+                            <span class="online">&#9679;</span>
+                            <span>NikitaNeMudlo</span>
+                        </div>
+                        <div class="user">
+                            <span class="offline">&#9679;</span>
+                            <span>NikitaMudlo</span>
+                        </div>
+                        <div class="user">
+                            <span class="online">&#9679;</span>
+                            <span>NikitaNeMudlo</span>
+                        </div>
+                        <div class="user">
+                            <span class="offline">&#9679;</span>
+                            <span>NikitaMudlo</span>
+                        </div>
+                        <div class="user">
+                            <span class="online">&#9679;</span>
+                            <span>NikitaNeMudlo</span>
+                        </div>
                     </div>
-                </h5>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div id="messages">
+                    <div class="message">
+                        <div class="message-text">
+                            <span class="user-message">Nikita:</span>
+                            wot tak lol
+                        </div>
+                        <div class="message-date">
+                            18.12.15
+                        </div>
+                    </div>
+                    <div class="message"><span class="user-message">Nikita:</span>LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO OOOOOOOOOOOOOO
+                        OOOOOOOOOOOOOOOOOOOOOOOOOO OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO NNNNNNNNNNNNNNNNNNNNGGGGGGGGGGGGGGGGGGGGG</div>
+                    <div class="message"><span>LoL:</span>put your text in here</div>
+                </div>
                 <div class="col-sm-12">
-                    <input type="text" class="form-control" name="message" placeholder="Введите сообщение">
+                    <input id="message-input" type="text" class="form-control" name="message" placeholder="Введите сообщение">
+                    <button id="send-button" class="btn btn-default">Send</button>
                 </div>
             </div>
             <div class="clearfix"></div>
         </div>
     </div>
 
-<center>
     <!-- Modal -->
     <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel"><font color=#78909C>Авторизация</font></h4>
+                    <div class="center-text"><h4 class="modal-title" id="myModalLabel">Авторизация</h4></div>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <h5><font color=#78909C>Логин:</font></h5><input type="text" class="form-control" name="login">
-                        <h5><font color=#78909C>Пароль:</font></h5><input type="password" class="form-control" name="password">
+                    <form method="post" action="/login">
+                        <div class="center-text"><h5>Логин:</h5></div><input type="text" class="form-control" name="username">
+                        <div class="center-text"><h5>Пароль:</h5></div><input type="password" class="form-control" name="password">
                         <br>
-                        <button type="submit" class="btn btn-default but2"><font color=#78909C>Войти</font></button>
+                        <div class="center-text">
+                            <button type="submit" class="btn btn-default but2">Войти</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-</center>
 </body>
 </html>
