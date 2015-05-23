@@ -17,6 +17,7 @@ import java.sql.SQLException;
  */
 public class LoginUser extends HttpServlet {
 
+    //Время после которого пользователь не прошедший проверку будет удален.
     static private final Long delay = (long) 5*60*1000;
 
     @Override

@@ -8,6 +8,12 @@
     color: #78909C;
 }
 
+#logout-btn{
+    float: right;
+    width: 125px;
+    color: #78909C;
+}
+
 #users-container {
     display: block;
     width: 100%;

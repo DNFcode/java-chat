@@ -64,11 +64,11 @@ public class test extends HttpServlet {
             System.out.println(user[i]);
         }
         String messages[] = new String[0];
-        try {
+        /*try {
             messages = db.getMessages(filterDate);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
         for(int i=0; i<messages.length; i++){
             System.out.println(messages[i]);
         }
@@ -82,11 +82,11 @@ public class test extends HttpServlet {
         for(int i=0; i<user.length; i++){
             System.out.println(user[i]);
         }
-        try {
+        /*try {
             messages = db.getMessages(filterDate);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
         for(int i=0; i<messages.length; i++){
             System.out.println(messages[i]);
         }

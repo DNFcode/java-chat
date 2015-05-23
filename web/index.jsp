@@ -19,23 +19,27 @@
     <style>
         body {
             background-color: #CFD8DC; /* Цвет фона веб-страницы */
-        }
-        .but {
-            color: #78909C; /* Цвет символа */
+            margin-top: 40px;
         }
     </style>
 </head>
 <body>
-<h1></h1>
 
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
                 <!-- Bual -->
-                <button type="button" id="login-btn" class="btn btn-default but2" data-toggle="modal" data-target=".bs-example-modal-sm">
-                    <span>Log in</span>
-                </button>
-                <h1></h1>
+                <% if (request.getRemoteUser() == null){%>
+                    <button type="button" id="login-btn" class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-sm">
+                        <span>Log in</span>
+                    </button>
+                <%} else {%>
+                    <form method="get" action="/logout">
+                        <button type="submit" id="logout-btn" class="btn btn-default">
+                            <span>Log out</span>
+                        </button>
+                    </form>
+                <% } %>
             </div>
 
             <div class="col-sm-3">
@@ -61,7 +65,7 @@
                             <span>NikitaNeMudlo</span>
                         </div>
                         <div class="user">
-                            <sarcpan class="offline">&#9679;</span>
+                            <span class="offline">&#9679;</span>
                             <span>NikitaMudlo</span>
                         </div>
                         <div class="user">
@@ -71,6 +75,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-sm-9">
                 <div id="messages">
                     <div class="message">
@@ -91,7 +96,8 @@
                     <button id="send-button" class="btn btn-default">Send</button>
                 </div>
             </div>
-            <div class="clearfix"></div>
+
+
         </div>
     </div>
 
@@ -116,7 +122,6 @@
             </div>
         </div>
     </div>
-<button id="a"></button>
 
 </body>
 </html>

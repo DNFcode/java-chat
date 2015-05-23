@@ -13,13 +13,41 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>test</servlet-name>
-        <servlet-class>javachat.test</servlet-class>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>javachat.LogoutUser</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>test</servlet-name>
-        <url-pattern>/hello</url-pattern>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>messageGet</servlet-name>
+        <servlet-class>javachat.MessageGet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>messageGet</servlet-name>
+        <url-pattern>/message/get</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>messageSend</servlet-name>
+        <servlet-class>javachat.MessageSend</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>messageSend</servlet-name>
+        <url-pattern>/message/send</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>users</servlet-name>
+        <servlet-class>javachat.UsersGet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>users</servlet-name>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+
 
     <filter>
         <filter-name>default</filter-name>

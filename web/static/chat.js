@@ -47,7 +47,12 @@ function updateMessages(date){
         }
     });
     messages.forEach(function(message){
+        var messageDiv = "<div class='message' msgid='"+message.id+"'><span "+
+            (message.username == username ? "class='user-message'" : "")+
+            ">"+message.username+": </span>" +
+            message.message + "</div>";
 
+        $('#messages').append(messageDiv);
     });
 }
 
@@ -55,33 +60,49 @@ function getUsername(){
     return "123" //TODO: get username
 }
 
-$(document).ready(function() {
-    $('#a').click(function(){
-        $.ajax({
-            url: '/hello?username=1234',
-            type: 'GET',
-            dataType: 'json',
-            success: function(data, textStatus, xhr) {
-                console.log(xhr.status);
-            },
-            complete: function(xhr, textStatus) {
-                console.log(xhr.status);
-            },
-            error: function(xhr,textStatus, errorThrown ){
-                console.log(xhr.status);
-            }
-        })
-    })
+function getLastMessageID(){
+    return parseInt($("#messages:last-child").attr("msgid"));
+}
 
-    $('#send-button').click(function(){
+$(document).ready(function() {
+
+    //----------------Автоматические обновления------------
+    setInterval(function(){
+        updateMessages(getLastMessageID());
+        updateUsers();
+    }, 2000);
+    //-----------------------------------------------------
+
+    //-----------------Отправка сообщений------------------
+    function sendMessage(){
+        $('#message-input').val('');
+        $('#send-button').attr('disabled','disabled');
         $.ajax({
             url: '/message/send',
             type: 'POST',
+            data: {message: $('#message-input').val()},
+            dataType: 'html',
             success: function(data, textStatus, xhr) {
-
+                updateMessages(getLastMessageID());
+                $('#send-button').removeAttr('disabled');
+            },
+            error: function(xhr,textStatus, errorThrown ){
+                $('#send-button').removeAttr('disabled');
             }
         })
+    }
+
+    $('#send-button').click(function(){
+        sendMessage();
     });
+
+    $('#message-input').keyup(function(e){
+        if(e.keyCode == 13)
+        {
+            sendMessage();
+        }
+    });
+    //-----------------------------------------------------
 
     //------------------Список юзеров----------------------
     $('#online-switch').click(function(){
