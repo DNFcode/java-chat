@@ -176,6 +176,7 @@ public class DataBase {
     public Message[] getMessages(Long ID){
         //TODO: Перегрузка метода повыше, только здесь нужно вернуть все сообщения, ID у которых
         //TODO: меньше чем указанный.
+        return new Message[1];
     }
 
     /**
