@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Calendar;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,11 +38,8 @@ public class test extends HttpServlet {
         final Long time3 = timeNow.getTime() - timeNow2.getTime();
         Gson gson = new Gson();
 
-        uuser[] array = {new uuser("lol", true), new uuser("WTF", false)};
-        String a = gson.toJson(array);
-        resp.setStatus(HttpServletResponse.SC_OK);
-        PrintWriter pw = resp.getWriter();
-        pw.print(a);
+        Date tiime = Date.valueOf("2015-10-22");
+
         System.out.println("<H1>Hello, world! или Привет мир</H1>");
 
         String username = "Kate";
@@ -93,15 +91,5 @@ public class test extends HttpServlet {
             System.out.println(messages[i]);
         }
         db.disconnect();
-    }
-}
-
-class uuser {
-    private String name;
-    private Boolean isOnline;
-
-    uuser(String name, Boolean isOnline) {
-        this.name = name;
-        this.isOnline = isOnline;
     }
 }

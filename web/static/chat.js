@@ -37,6 +37,7 @@ function updateUsers(){
 
 function updateMessages(date){
     var messages = [];
+    var username = getUsername();
     $.ajax({
         url: '/message/get?date='+date,
         type: 'GET',
@@ -45,8 +46,13 @@ function updateMessages(date){
             messages = data;
         }
     });
+    messages.forEach(function(message){
 
+    });
+}
 
+function getUsername(){
+    return "123" //TODO: get username
 }
 
 $(document).ready(function() {
@@ -66,6 +72,16 @@ $(document).ready(function() {
             }
         })
     })
+
+    $('#send-button').click(function(){
+        $.ajax({
+            url: '/message/send',
+            type: 'POST',
+            success: function(data, textStatus, xhr) {
+
+            }
+        })
+    });
 
     //------------------Список юзеров----------------------
     $('#online-switch').click(function(){
@@ -98,7 +114,7 @@ $(document).ready(function() {
             }
             updateUsers();
         }
-    })
+    });
     //-----------------------------------------------------
 
     $()

@@ -61,7 +61,7 @@
                             <span>NikitaNeMudlo</span>
                         </div>
                         <div class="user">
-                            <span class="offline">&#9679;</span>
+                            <sarcpan class="offline">&#9679;</span>
                             <span>NikitaMudlo</span>
                         </div>
                         <div class="user">
@@ -116,6 +116,7 @@
             </div>
         </div>
     </div>
+<button id="a"></button>
 
 </body>
 </html>

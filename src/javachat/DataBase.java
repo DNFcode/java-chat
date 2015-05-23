@@ -28,12 +28,14 @@ public class DataBase {
     /**
      * private конструктор для невозможного создания новых объектов БД.
      */
+    //TODO: При инициализации нужно создавать таблицы если их нет :3
     private DataBase() {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String url = "jdbc:oracle:thin:@de.ifmo.ru:3521:xe";
             Locale.setDefault(Locale.ENGLISH);
-            conn = DriverManager.getConnection(url, "user", "password");
+            //НЕЛЬЗЯ КОММИТИТЬ С ПАРОЛЕМ И ЮЗЕРОМ
+            conn = DriverManager.getConnection(url, "u0006", "pip902");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -150,6 +152,9 @@ public class DataBase {
      * Возвращает список всех сообщений, которые были сохранены не позднее указанной даты.
      * При ошибке возвращает null.
      */
+
+    //TODO: Возвращать нужно Message[]
+    //TODO: И да, на вход будет подаваться не long, а Date. Ну его же всегда можно перевести в long ;)
     public String[] getMessages(long filterDate) throws SQLException { //Work
         ArrayList<String> messages = new ArrayList<String>();
         System.out.println("DATE: " + filterDate);
@@ -166,6 +171,11 @@ public class DataBase {
         int n = messages.size();
         String user[] = (String[])messages.toArray(new String[n]);
         return user;
+    }
+
+    public Message[] getMessages(Long ID){
+        //TODO: Перегрузка метода повыше, только здесь нужно вернуть все сообщения, ID у которых
+        //TODO: меньше чем указанный.
     }
 
     /**
