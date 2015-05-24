@@ -34,6 +34,7 @@
                         <span>Log in</span>
                     </button>
                 <%} else {%>
+                    <div id="username">Hi, <%=request.getRemoteUser()%></div>
                     <form method="get" action="/logout">
                         <button type="submit" id="logout-btn" class="btn btn-default">
                             <span>Log out</span>

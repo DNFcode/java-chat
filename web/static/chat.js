@@ -57,7 +57,7 @@ function updateMessages(date){
 }
 
 function getUsername(){
-    return "123" //TODO: get username
+    return $('#username').text().substr(4);
 }
 
 function getLastMessageID(){
