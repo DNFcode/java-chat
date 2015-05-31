@@ -29,7 +29,7 @@ public class MessageGet extends HttpServlet {
             //TODO: don't forget to make valid AJAX request date format yyyy-[m]m-[d]d
             DataBase db = DataBase.getInstance();
             //Message[] messages = db.getMessages(date);
-            String[] messages = db.getMessages(date_);
+            Message[] messages = db.getMessages(date);
 
             if (messages != null) {
                 Gson gson = new Gson();

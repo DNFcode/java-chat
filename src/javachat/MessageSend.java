@@ -13,9 +13,12 @@ public class MessageSend extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Get data from POST method.
-        String username = req.getRemoteUser();
-        String message = req.getParameter("message");
+        String username = (String) req.getSession().getAttribute("user");
+        System.out.println(username);
+        String message = req.getParameter("message-input");
+        System.out.println("Message: " + message);
         if (message == null) {
+            System.out.println("Why not?");
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }

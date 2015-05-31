@@ -25,6 +25,7 @@ public class DataBase {
         return instance;
     }
 
+
     /**
      * private конструктор для невозможного создания новых объектов БД.
      */
@@ -33,9 +34,13 @@ public class DataBase {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String url = "jdbc:oracle:thin:@de.ifmo.ru:3521:xe";
+            String user = "u0010";
+            String password = "ysa142";
             Locale.setDefault(Locale.ENGLISH);
             //НЕЛЬЗЯ КОММИТИТЬ С ПАРОЛЕМ И ЮЗЕРОМ
-            conn = DriverManager.getConnection(url, "u0006", "pip902");
+            conn = DriverManager.getConnection(url, user, password);
+            createUserTable();
+            createMessageTable();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -67,6 +72,40 @@ public class DataBase {
             return false;
         }
     }
+    //а где ты вызываешь то? я убрала вызов, чтобы посмотреть
+    //подключается ли вообще, юез этого метода
+
+    private void createUserTable() throws SQLException {
+        try{
+            PreparedStatement stmt = null;
+            String query = "CREATE TABLE Users ("
+                + "login VARCHAR(20) NOT NULL, "
+                + "password VARCHAR(50) NOT NULL"
+                + ")";
+            stmt = conn.prepareStatement(query);
+            stmt.execute();
+            stmt.close();
+            conn.commit();
+        }catch (Exception e){
+            System.out.println("Database exception.");
+        }
+    }
+
+    private void createMessageTable() throws SQLException {
+        try{
+            String query = "CREATE TABLE Message ("
+                    + "login VARCHAR(20) NOT NULL, "
+                    + "message VARCHAR(255) NOT NULL, "
+                    + "date_ NUMBER(20) NOT NULL"
+                    + ")";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.execute();
+            stmt.close();
+            conn.commit();
+        }catch (Exception e){
+            System.out.println("Database exception.");
+        }
+    }
 
     /**
      * username - имя пользователя
@@ -85,8 +124,8 @@ public class DataBase {
             stmt.setString(2, MD5password);
             stmt.executeUpdate();
             stmt.close();
+            return true;
         }
-        return true;
     }
 
     /**
@@ -132,13 +171,13 @@ public class DataBase {
     public boolean saveMessage(String username, String message) throws SQLException {//Work
         java.util.Date Current_Date = new java.util.Date();
         System.out.println("Date of save: " + Current_Date);
-        long date = Current_Date.getTime();
+        long date_ = Current_Date.getTime();
         if(userExists(username)){
             PreparedStatement stmt = conn.prepareStatement(
                     "insert into Message values(?,?,?)");
             stmt.setString(1, username);
             stmt.setString(2, message);
-            stmt.setLong(3, date);
+            stmt.setLong(3, date_);
             stmt.executeUpdate();
             stmt.close();
         } else{
@@ -152,31 +191,26 @@ public class DataBase {
      * Возвращает список всех сообщений, которые были сохранены не позднее указанной даты.
      * При ошибке возвращает null.
      */
-
     //TODO: Возвращать нужно Message[]
     //TODO: И да, на вход будет подаваться не long, а Date. Ну его же всегда можно перевести в long ;)
-    public String[] getMessages(long filterDate) throws SQLException { //Work
-        ArrayList<String> messages = new ArrayList<String>();
-        System.out.println("DATE: " + filterDate);
+    public Message[] getMessages(Date filterDate) throws SQLException { //Work
+        ArrayList<Message> messages = new ArrayList<Message>();
         PreparedStatement stmt = null;
-        String query = "SELECT message FROM Message WHERE date_mes < ?";
+        Long dateFilter = filterDate.getTime();
+        String query = "SELECT message, login, date_ FROM Message WHERE date_ < ? ORDER BY date_ ASC ";
         stmt = conn.prepareStatement(query);
-        stmt.setLong(1, filterDate);
+        stmt.setLong(1, dateFilter);
         ResultSet rs = stmt.executeQuery();
+        int counter = 0;
         while (rs.next()) {
-            messages.add(rs.getString("message"));
+            System.out.println(counter++ + ":");
+            messages.add(new Message(rs.getString("login"),
+                    new Date(rs.getLong("date_")),
+                    rs.getString("message")));
         }
         rs.close();
         stmt.close();
-        int n = messages.size();
-        String user[] = (String[])messages.toArray(new String[n]);
-        return user;
-    }
-
-    public Message[] getMessages(Long ID){
-        //TODO: Перегрузка метода повыше, только здесь нужно вернуть все сообщения, ID у которых
-        //TODO: меньше чем указанный.
-        return new Message[1];
+        return messages.toArray(new Message[messages.size()]);
     }
 
     /**
@@ -185,10 +219,9 @@ public class DataBase {
      */
     public String[] getAllUsers() { //Work
         ArrayList<String> login = new ArrayList<String>();
-        PreparedStatement stmt = null;
         String query = "SELECT login FROM Users";
         try {
-            stmt = conn.prepareStatement(query);
+            PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 login.add(rs.getString("login"));

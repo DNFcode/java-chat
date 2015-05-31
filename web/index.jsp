@@ -93,7 +93,8 @@
                     <div class="message"><span>LoL:</span>put your text in here</div>
                 </div>
                 <div class="col-sm-12">
-                    <input id="message-input" type="text" class="form-control" name="message" placeholder="Введите сообщение">
+                    <%--<input id="message-input" type="text" class="form-control" name="message" placeholder="Введите сообщение">--%>
+                    <input id="message-input" type="text" class="form-control" name="message-input">
                     <button id="send-button" class="btn btn-default">Send</button>
                 </div>
             </div>
@@ -123,6 +124,8 @@
             </div>
         </div>
     </div>
+
+    <button id="a">FPFPFP</button>
 
 </body>
 </html>

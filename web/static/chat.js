@@ -1,5 +1,5 @@
 /**
- * Created by dnf on 12.05.15.
+ * Created by dn5f on 12.05.15.
  */
 
 var users = [];
@@ -47,7 +47,7 @@ function updateMessages(date){
         }
     });
     messages.forEach(function(message){
-        var messageDiv = "<div class='message' msgid='"+message.id+"'><span "+
+        var messageDiv = "<div class='message' msgdate='"+message.date+"'><span "+
             (message.username == username ? "class='user-message'" : "")+
             ">"+message.username+": </span>" +
             message.message + "</div>";
@@ -60,15 +60,29 @@ function getUsername(){
     return $('#username').text().substr(4);
 }
 
-function getLastMessageID(){
-    return parseInt($("#messages:last-child").attr("msgid"));
+function getLastMessageDate(){
+    return parseInt($("#messages:last-child").attr("msgdate"));
 }
 
+
+//короче бывает все не так просто... бывает что js начинает отрабатывать раньше
+//чем отрисовывается html ... вооот. Так вот. та хрень внизу
+// начинает отрабатывать когда страница отрисовалась
 $(document).ready(function() {
 
+    $('#a').click(function() {
+        $.ajax({
+            url: '/test',
+            type: 'GET',
+            dataType: 'json'
+        });
+    });
+
+    //классные комменты  тут D: понятные очень
     //----------------РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРёРµ РѕР±РЅРѕРІР»РµРЅРёСЏ------------
     setInterval(function(){
-        updateMessages(getLastMessageID());
+        //updateMessages(getLastMessageDate());
+        updateMessages('2015-05-31');
         updateUsers();
     }, 2000);
     //-----------------------------------------------------
@@ -83,7 +97,7 @@ $(document).ready(function() {
             data: {message: $('#message-input').val()},
             dataType: 'html',
             success: function(data, textStatus, xhr) {
-                updateMessages(getLastMessageID());
+                updateMessages(getLastMessageDate());
                 $('#send-button').removeAttr('disabled');
             },
             error: function(xhr,textStatus, errorThrown ){

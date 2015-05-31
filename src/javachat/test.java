@@ -38,18 +38,33 @@ public class test extends HttpServlet {
         final Long time3 = timeNow.getTime() - timeNow2.getTime();
         Gson gson = new Gson();
 
-        Date tiime = Date.valueOf("2015-10-22");
+        Date time = Date.valueOf("2015-10-22");
 
         System.out.println("<H1>Hello, world! или Привет мир</H1>");
 
-        String username = "Kate";
-        String password = null;
-        java.util.Date Current_Date = new java.util.Date();
-        Long filterDate = Current_Date.getTime();
+        String username = "1234";
+        String password = "1234";
+        Date CurrentDate = new Date(Calendar.getInstance().getTimeInMillis());
+        //Long filterDate = Current_Date.getTime();
         //Проверка
         DataBase db = DataBase.getInstance();
         try {
-            db.saveUser("1234", "12f33");
+            db.saveUser(username, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+//        try {
+//            db.saveMessage(username, "aefwegewgewgwewfew");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            db.saveMessage(username, "1234gwewfew");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        try {
+            db.saveUser("Kate", "Kate");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -60,17 +75,24 @@ public class test extends HttpServlet {
         }
         System.out.println("Users: ");
         String user[] = db.getAllUsers();
-        for(int i=0; i<user.length; i++){
-            System.out.println(user[i]);
+        //тут вылетело ну так он не может получить юзеров, которых нет в БД
+        //и самой таблицы тоже нет
+        //она не создаётся хотя как-то же он получил пароль null странности
+        if(user.length > 0){
+            for(int i=0; i<user.length; i++){
+                System.out.println(user[i]);
+            }
+        }else{
+            System.out.println("Users not found!");
         }
-        String messages[] = new String[0];
-        /*try {
-            messages = db.getMessages(filterDate);
+        Message[] messages = new Message[0];
+        try {
+            messages = db.getMessages(CurrentDate);
         } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
+            System.out.println("Exception when try to get messages: " + e.getMessage());
+        }
         for(int i=0; i<messages.length; i++){
-            System.out.println(messages[i]);
+            System.out.println(messages[i].getMessage());
         }
         try {
             db.removeUser("Kate");
@@ -81,14 +103,6 @@ public class test extends HttpServlet {
         user = db.getAllUsers();
         for(int i=0; i<user.length; i++){
             System.out.println(user[i]);
-        }
-        /*try {
-            messages = db.getMessages(filterDate);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
-        for(int i=0; i<messages.length; i++){
-            System.out.println(messages[i]);
         }
         db.disconnect();
     }

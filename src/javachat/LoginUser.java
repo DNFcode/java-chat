@@ -25,20 +25,29 @@ public class LoginUser extends HttpServlet {
         //Get data from POST method.
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+        System.out.println("Try connect to DB");
+        DataBase db = DataBase.getInstance();
+        System.out.println("exception.???");
         if (username == null || password == null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
         try {
             String passwordMD5 = stringToMD5(password);
-            DataBase db = DataBase.getInstance();
             String dbMD5password = db.getUserMD5Password(username);
+            System.out.println("Password: " + dbMD5password);
             if (dbMD5password != null) {
                 if (dbMD5password.equals(passwordMD5)) {
                     //Авторизация пользователя
                     CachedData cd = CachedData.getInstance();
                     cd.getUser(username).setRegistered();
-                    req.login(username, password);
+                    System.out.println("Auth");
+                    req.getSession().setAttribute("user", username);
+                    try{
+                        //req.login(username, password);
+                    }catch(Exception ex){
+                        System.out.println("can't Auth: " + ex.getMessage());
+                    }
                     resp.sendRedirect("/index.jsp");
                 } else {
                     resp.sendError(HttpServletResponse.SC_FORBIDDEN);
@@ -62,10 +71,17 @@ public class LoginUser extends HttpServlet {
                 }
             }
         } catch (NoSuchAlgorithmException ex) {
+            System.out.println("NoSuchAlgoritmEx = " + ex.getMessage());
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } catch (SQLException e) {
+            System.out.println("Sql exception = " + e.getMessage());
             e.printStackTrace();
-        }
+
+    } finally
+
+    {
+        req.logout();
+    }
 
     }
 
