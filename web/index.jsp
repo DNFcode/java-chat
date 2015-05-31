@@ -1,3 +1,4 @@
+<%@ page import="java.util.Date" %>
 <%--
   Created by IntelliJ IDEA.
   User: dnf
@@ -24,17 +25,18 @@
     </style>
 </head>
 <body>
+    <div id="startDate" style="visibility: hidden"><%=(new Date((new Date()).getTime()-6*60*60*1000)).getTime()%></div>
 
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
                 <!-- Bual -->
-                <% if (request.getRemoteUser() == null){%>
+                <% if (request.getSession().getAttribute("user") == null){%>
                     <button type="button" id="login-btn" class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-sm">
                         <span>Log in</span>
                     </button>
                 <%} else {%>
-                    <div id="username">Hi, <%=request.getRemoteUser()%></div>
+                    <div id="username">Hi, <%=(String)request.getSession().getAttribute("user")%></div>
                     <form method="get" action="/logout">
                         <button type="submit" id="logout-btn" class="btn btn-default">
                             <span>Log out</span>
@@ -49,48 +51,13 @@
                     <div id="online-switch" class="switch online-switch-on">Online</div>
                     <div id="all-switch" class="switch all-switch-off">All</div>
                     <div id="users-list" class="users-list-online">
-                        <div class="user">
-                            <span class="offline">&#9679;</span>
-                            <span>NikitaMudlo</span>
-                        </div>
-                        <div class="user">
-                            <span class="online">&#9679;</span>
-                            <span>NikitaNeMudlo</span>
-                        </div>
-                        <div class="user">
-                            <span class="offline">&#9679;</span>
-                            <span>NikitaMudlo</span>
-                        </div>
-                        <div class="user">
-                            <span class="online">&#9679;</span>
-                            <span>NikitaNeMudlo</span>
-                        </div>
-                        <div class="user">
-                            <span class="offline">&#9679;</span>
-                            <span>NikitaMudlo</span>
-                        </div>
-                        <div class="user">
-                            <span class="online">&#9679;</span>
-                            <span>NikitaNeMudlo</span>
-                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-sm-9">
                 <div id="messages">
-                    <div class="message">
-                        <div class="message-text">
-                            <span class="user-message">Nikita:</span>
-                            wot tak lol
-                        </div>
-                        <div class="message-date">
-                            18.12.15
-                        </div>
-                    </div>
-                    <div class="message"><span class="user-message">Nikita:</span>LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO OOOOOOOOOOOOOO
-                        OOOOOOOOOOOOOOOOOOOOOOOOOO OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO NNNNNNNNNNNNNNNNNNNNGGGGGGGGGGGGGGGGGGGGG</div>
-                    <div class="message"><span>LoL:</span>put your text in here</div>
+
                 </div>
                 <div class="col-sm-12">
                     <%--<input id="message-input" type="text" class="form-control" name="message" placeholder="Введите сообщение">--%>
@@ -124,8 +91,6 @@
             </div>
         </div>
     </div>
-
-    <button id="a">FPFPFP</button>
 
 </body>
 </html>

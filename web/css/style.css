@@ -40,6 +40,7 @@
 #username{
     float: left;
     color: #006064;
+    font-size: 15pt;
 }
 
 .online-switch-off{
@@ -116,7 +117,7 @@
 }
 
 .message-text{
-
+    width: 80%;
 }
 
 .center-text{
@@ -126,6 +127,13 @@
 
 .message{
     margin: 6px;
+    position: relative;
+}
+
+.message-date{
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .user-message{

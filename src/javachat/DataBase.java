@@ -18,7 +18,6 @@ public class DataBase {
     private Connection conn;
 
     static public DataBase getInstance() {
-        System.out.println("Connection run");
         Locale.setDefault(Locale.ENGLISH);
         if(instance == null)
             instance = new DataBase();
@@ -197,13 +196,12 @@ public class DataBase {
         ArrayList<Message> messages = new ArrayList<Message>();
         PreparedStatement stmt = null;
         Long dateFilter = filterDate.getTime();
-        String query = "SELECT message, login, date_ FROM Message WHERE date_ < ? ORDER BY date_ ASC ";
+        String query = "SELECT message, login, date_ FROM Message WHERE date_ > ? ORDER BY date_ ASC ";
         stmt = conn.prepareStatement(query);
         stmt.setLong(1, dateFilter);
         ResultSet rs = stmt.executeQuery();
         int counter = 0;
         while (rs.next()) {
-            System.out.println(counter++ + ":");
             messages.add(new Message(rs.getString("login"),
                     new Date(rs.getLong("date_")),
                     rs.getString("message")));

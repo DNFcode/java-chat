@@ -44,15 +44,17 @@ function updateMessages(date){
         dataType: 'json',
         success: function(data, textStatus, xhr) {
             messages = data;
-        }
-    });
-    messages.forEach(function(message){
-        var messageDiv = "<div class='message' msgdate='"+message.date+"'><span "+
-            (message.username == username ? "class='user-message'" : "")+
-            ">"+message.username+": </span>" +
-            message.message + "</div>";
+            messages.forEach(function(message){
+                var messageDiv = "<div class='message' msgdate='"+message.longDate+"'>" +
+                    "<div class='message-text'><span "+
+                    (message.username == username ? "class='user-message'" : "")+
+                    ">"+message.username+": </span>" +
+                    message.message + "</div>" +
+                    "<div class='message-date'>"+message.stringDate+"</div></div>";
 
-        $('#messages').append(messageDiv);
+                $('#messages').append(messageDiv);
+            });
+        }
     });
 }
 
@@ -61,35 +63,29 @@ function getUsername(){
 }
 
 function getLastMessageDate(){
-    return parseInt($("#messages:last-child").attr("msgdate"));
+    if($('.message').length > 0) {
+        return parseInt($(".message:last").attr("msgdate"));
+    }else{
+        return $('#startDate').text();
+    }
 }
 
 
-//короче бывает все не так просто... бывает что js начинает отрабатывать раньше
-//чем отрисовывается html ... вооот. Так вот. та хрень внизу
-// начинает отрабатывать когда страница отрисовалась
 $(document).ready(function() {
 
-    $('#a').click(function() {
-        $.ajax({
-            url: '/test',
-            type: 'GET',
-            dataType: 'json'
-        });
-    });
+    updateMessages(getLastMessageDate());
+    updateUsers();
 
-    //классные комменты  тут D: понятные очень
     //----------------РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРёРµ РѕР±РЅРѕРІР»РµРЅРёСЏ------------
     setInterval(function(){
         //updateMessages(getLastMessageDate());
-        updateMessages('2015-05-31');
+        updateMessages(getLastMessageDate());
         updateUsers();
     }, 2000);
     //-----------------------------------------------------
 
     //-----------------РћС‚РїСЂР°РІРєР° СЃРѕРѕР±С‰РµРЅРёР№------------------
     function sendMessage(){
-        $('#message-input').val('');
         $('#send-button').attr('disabled','disabled');
         $.ajax({
             url: '/message/send',
@@ -104,6 +100,7 @@ $(document).ready(function() {
                 $('#send-button').removeAttr('disabled');
             }
         })
+        $('#message-input').val('');
     }
 
     $('#send-button').click(function(){

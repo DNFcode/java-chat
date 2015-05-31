@@ -38,6 +38,7 @@ public class User {
     }
 
     public void updateLastActivityTime() {
+        System.out.println(username+" active");
         lastActivityTime = Calendar.getInstance().getTimeInMillis();
     }
 

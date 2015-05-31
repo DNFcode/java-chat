@@ -24,8 +24,7 @@ public class MessageGet extends HttpServlet {
         CachedData.getInstance().updateUserActivity(req);
 
         try {
-            Date date = Date.valueOf(req.getParameter("date"));
-            long date_ = date.getTime();
+            Date date = new Date(Long.valueOf(req.getParameter("date")));
             //TODO: don't forget to make valid AJAX request date format yyyy-[m]m-[d]d
             DataBase db = DataBase.getInstance();
             //Message[] messages = db.getMessages(date);

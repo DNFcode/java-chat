@@ -25,7 +25,7 @@ public class UsersGet extends HttpServlet {
         CachedData.getInstance().updateUserActivity(req);
 
         CachedData cd = CachedData.getInstance();
-        cd.updateUsersStatus();
+        //cd.updateUsersStatus();
         User[] users = cd.getUsers();
 
         Gson gson = new Gson();

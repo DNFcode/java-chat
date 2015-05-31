@@ -51,7 +51,7 @@ public class CachedData {
     }
 
     public void updateUserActivity(HttpServletRequest req){
-        String username = req.getRemoteUser();
+        String username = (String) req.getSession().getAttribute("user");
         if (username != null){
             CachedData cd = CachedData.getInstance();
             cd.getUser(username).updateLastActivityTime();

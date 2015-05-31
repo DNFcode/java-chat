@@ -14,15 +14,12 @@ public class MessageSend extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Get data from POST method.
         String username = (String) req.getSession().getAttribute("user");
-        System.out.println(username);
-        String message = req.getParameter("message-input");
-        System.out.println("Message: " + message);
+        String message = req.getParameter("message");
         if (message == null) {
-            System.out.println("Why not?");
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        if (username == null && message != null) {
+        if (username == null) {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
